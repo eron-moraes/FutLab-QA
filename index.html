@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>FutLab QA</title>
+
+    <!-- Vue 3 CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <link rel="stylesheet" href="./css/style.css" />
+</head>
+
+<body>
+
+    <div id="app">
+        <h1>⚽ FutLab QA</h1>
+
+        <!-- Formulário de Cadastro -->
+        <form @submit.prevent="addPlayer" data-testid="player-form">
+
+            <label>
+                Nome do Jogador
+                <input type="text" v-model="player.name" data-testid="player-name" required />
+            </label>
+
+            <label>
+                Time
+                <select v-model="player.team" @change="updateTeamColors" data-testid="team-select" required>
+                    <option value="">Selecione um time</option>
+                    <option v-for="team in teams" :key="team.name" :value="team">
+                        {{ team.name }}
+                    </option>
+                </select>
+            </label>
+
+            <!-- Quadradinho de cores -->
+            <div class="team-color" :style="{ backgroundColor: selectedColor }" data-testid="team-color"></div>
+
+            <button type="submit" data-testid="submit-button">
+                Cadastrar Jogador
+            </button>
+        </form>
+
+        <!-- Lista de jogadores -->
+        <ul>
+            <li v-for="(p, index) in players" :key="index">
+                {{ p.name }} — {{ p.team.name }}
+            </li>
+        </ul>
+
+    </div>
+
+    <script src="./js/teams.js"></script>
+    <script src="./js/app.js"></script>
+</body>
+
+</html>
