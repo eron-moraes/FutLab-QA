@@ -17,6 +17,7 @@ createApp({
                 "Centroavante"
             ],
             players: [],
+            editingIndex: null,
             player: {
                 name: "",
                 number: null,
@@ -62,13 +63,13 @@ createApp({
             }
         },
 
-        addPlayer() {
+        savePlayer() {
             if (!this.player.name || !this.player.number || !this.player.position || 
                 !this.player.foot || !this.player.height || !this.player.team) {
                 return;
             }
 
-            this.players.push({
+            const playerData = {
                 name: this.player.name,
                 number: this.player.number,
                 position: this.player.position,
@@ -76,9 +77,59 @@ createApp({
                 height: this.player.height.toFixed(2),
                 photo: this.player.photo,
                 team: this.player.team
-            });
+            };
 
-            // Reset form
+            if (this.editingIndex !== null) {
+                // Editar jogador existente
+                this.players[this.editingIndex] = playerData;
+                this.editingIndex = null;
+            } else {
+                // Adicionar novo jogador
+                this.players.push(playerData);
+            }
+
+            this.resetForm();
+        },
+
+        editPlayer(index) {
+            const player = this.players[index];
+            this.editingIndex = index;
+            
+            // Preencher formulário com dados do jogador
+            this.player = {
+                name: player.name,
+                number: player.number,
+                position: player.position,
+                foot: player.foot,
+                height: parseFloat(player.height),
+                photo: player.photo,
+                photoPreview: player.photo,
+                team: player.team
+            };
+            
+            this.selectedColor = player.team.color || "transparent";
+            
+            // Scroll para o formulário
+            document.querySelector('.form-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        },
+
+        deletePlayer(index) {
+            if (confirm('Tem certeza que deseja deletar este jogador?')) {
+                this.players.splice(index, 1);
+                if (this.editingIndex === index) {
+                    this.resetForm();
+                } else if (this.editingIndex > index) {
+                    this.editingIndex--;
+                }
+            }
+        },
+
+        cancelEdit() {
+            this.resetForm();
+        },
+
+        resetForm() {
+            this.editingIndex = null;
             this.player = {
                 name: "",
                 number: null,
