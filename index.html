@@ -14,14 +14,65 @@
 <body>
 
     <div id="app">
-        <h1>⚽ FutLab QA</h1>
+        <div class="header">
+            <h1><span class="ball-icon">⚽</span> <span class="title-text">FutLab QA</span></h1>
+            <p class="subtitle">Sistema de Cadastro de Jogadores</p>
+        </div>
 
         <!-- Formulário de Cadastro -->
-        <form @submit.prevent="addPlayer" data-testid="player-form">
+        <div class="form-container">
+            <h2 class="form-title">📝 Cadastrar Novo Jogador</h2>
+            <form @submit.prevent="addPlayer" data-testid="player-form">
 
             <label>
                 Nome do Jogador
                 <input type="text" v-model="player.name" data-testid="player-name" required />
+            </label>
+
+            <label>
+                Número
+                <input type="number" v-model.number="player.number" @input="validateNumber" data-testid="player-number" min="1" max="999" maxlength="3" required />
+            </label>
+
+            <label>
+                Posição
+                <select v-model="player.position" data-testid="player-position" required>
+                    <option value="">Selecione uma posição</option>
+                    <option v-for="pos in positions" :key="pos" :value="pos">
+                        {{ pos }}
+                    </option>
+                </select>
+            </label>
+
+            <label>
+                Pé dominante
+                <div class="radio-group" data-testid="player-foot">
+                    <label class="radio-option">
+                        <input type="radio" v-model="player.foot" value="Direito" required />
+                        <span>Direito</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" v-model="player.foot" value="Esquerdo" required />
+                        <span>Esquerdo</span>
+                    </label>
+                    <label class="radio-option">
+                        <input type="radio" v-model="player.foot" value="Ambidestro" required />
+                        <span>Ambidestro</span>
+                    </label>
+                </div>
+            </label>
+
+            <label>
+                Altura (metros)
+                <input type="number" v-model.number="player.height" data-testid="player-height" step="0.01" min="0" max="3" required />
+            </label>
+
+            <label>
+                Foto
+                <input type="file" @change="handleFileUpload" accept="image/*" data-testid="player-photo" />
+                <div v-if="player.photoPreview" class="photo-preview">
+                    <img :src="player.photoPreview" alt="Preview da foto" />
+                </div>
             </label>
 
             <label>
@@ -38,16 +89,41 @@
             <div class="team-color" :style="{ backgroundColor: selectedColor }" data-testid="team-color"></div>
 
             <button type="submit" data-testid="submit-button">
-                Cadastrar Jogador
+                ⚽ Cadastrar Jogador
             </button>
         </form>
+        </div>
 
         <!-- Lista de jogadores -->
-        <ul>
-            <li v-for="(p, index) in players" :key="index">
-                {{ p.name }} — {{ p.team.name }}
-            </li>
-        </ul>
+        <div class="players-list">
+            <h2>Jogadores Cadastrados</h2>
+            <ul>
+                <li v-for="(p, index) in players" :key="index" class="player-item">
+                    <div class="player-card" :style="{ borderLeftColor: p.team.color }">
+                        <div class="player-number-badge">#{{ p.number }}</div>
+                        <div class="player-info">
+                            <div v-if="p.photo" class="player-photo">
+                                <img :src="p.photo" :alt="p.name" />
+                            </div>
+                            <div v-else class="player-photo-placeholder">
+                                <span>⚽</span>
+                            </div>
+                            <div class="player-details">
+                                <strong class="player-name">{{ p.name }}</strong>
+                                <div class="player-team-badge" :style="{ backgroundColor: p.team.color }">
+                                    {{ p.team.name }}
+                                </div>
+                                <div class="player-stats">
+                                    <span class="stat-item">📍 {{ p.position }}</span>
+                                    <span class="stat-item">🦶 {{ p.foot }}</span>
+                                    <span class="stat-item">📏 {{ p.height }}m</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
     </div>
 
