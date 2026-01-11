@@ -248,6 +248,22 @@ button:active {
     transform: translateY(-1px);
 }
 
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-cancel {
+    background: linear-gradient(135deg, #dc3545, #c82333) !important;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4) !important;
+}
+
+.btn-cancel:hover {
+    background: linear-gradient(135deg, #c82333, #dc3545) !important;
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.6) !important;
+}
+
 .players-list {
     margin-top: 30px;
     background: rgba(255, 255, 255, 0.95);
@@ -288,6 +304,10 @@ button:active {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 15px;
 }
 
 .player-card::before {
@@ -309,7 +329,7 @@ button:active {
 .player-number-badge {
     position: absolute;
     top: 15px;
-    right: 15px;
+    right: 80px;
     background: linear-gradient(135deg, #2d9f47, #1e7e34);
     color: white;
     width: 50px;
@@ -321,6 +341,63 @@ button:active {
     font-weight: 900;
     font-size: 1.2em;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.player-actions {
+    display: flex;
+    gap: 8px;
+    flex-shrink: 0;
+    align-self: flex-end;
+    margin-top: auto;
+}
+
+.btn-edit,
+.btn-delete {
+    width: 35px;
+    height: 35px;
+    min-width: 35px;
+    min-height: 35px;
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    font-size: 1em;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+}
+
+.btn-edit {
+    background: linear-gradient(135deg, #ffc107, #ff9800);
+    color: white;
+}
+
+.btn-edit:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+    background: linear-gradient(135deg, #ff9800, #ffc107);
+}
+
+.btn-delete {
+    background: linear-gradient(135deg, #dc3545, #c82333);
+    color: white;
+}
+
+.btn-delete:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+    background: linear-gradient(135deg, #c82333, #dc3545);
+}
+
+.btn-edit:active,
+.btn-delete:active {
+    transform: translateY(-1px) scale(1.05);
 }
 
 .player-info {
@@ -419,9 +496,15 @@ button:active {
         gap: 10px;
     }
 
+    .player-card {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
     .player-info {
         flex-direction: column;
         text-align: center;
+        width: 100%;
     }
 
     .player-number-badge {
@@ -429,5 +512,19 @@ button:active {
         top: 0;
         right: 0;
         margin: 0 auto 10px;
+    }
+
+    .player-actions {
+        width: 100%;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .form-actions button {
+        width: 100%;
     }
 }

@@ -21,8 +21,8 @@
 
         <!-- Formulário de Cadastro -->
         <div class="form-container">
-            <h2 class="form-title">📝 Cadastrar Novo Jogador</h2>
-            <form @submit.prevent="addPlayer" data-testid="player-form">
+            <h2 class="form-title">{{ editingIndex !== null ? '✏️ Editar Jogador' : '📝 Cadastrar Novo Jogador' }}</h2>
+            <form @submit.prevent="savePlayer" data-testid="player-form">
 
             <label>
                 Nome do Jogador
@@ -88,9 +88,14 @@
             <!-- Quadradinho de cores -->
             <div class="team-color" :style="{ backgroundColor: selectedColor }" data-testid="team-color"></div>
 
-            <button type="submit" data-testid="submit-button">
-                ⚽ Cadastrar Jogador
-            </button>
+            <div class="form-actions">
+                <button type="submit" data-testid="submit-button">
+                    {{ editingIndex !== null ? '💾 Salvar Alterações' : '⚽ Cadastrar Jogador' }}
+                </button>
+                <button v-if="editingIndex !== null" type="button" @click="cancelEdit" class="btn-cancel">
+                    ❌ Cancelar
+                </button>
+            </div>
         </form>
         </div>
 
@@ -119,6 +124,14 @@
                                     <span class="stat-item">📏 {{ p.height }}m</span>
                                 </div>
                             </div>
+                        </div>
+                        <div class="player-actions">
+                            <button @click="editPlayer(index)" class="btn-edit" title="Editar">
+                                ✏️
+                            </button>
+                            <button @click="deletePlayer(index)" class="btn-delete" title="Deletar">
+                                🗑️
+                            </button>
                         </div>
                     </div>
                 </li>
