@@ -47,6 +47,50 @@ php -S localhost:8000
 
 Depois acesse `http://localhost:8000` no navegador.
 
+## 🌐 Deploy no GitHub Pages
+
+O projeto está configurado para deploy automático no GitHub Pages!
+
+### Passo a Passo:
+
+1. **Faça commit e push das alterações:**
+   ```bash
+   git add .
+   git commit -m "Preparando para deploy"
+   git push origin crud_player
+   ```
+
+2. **Configure o GitHub Pages no repositório:**
+   - Vá até o repositório no GitHub
+   - Clique em **Settings** (Configurações)
+   - No menu lateral, clique em **Pages**
+   - Em **Source**, selecione **GitHub Actions**
+   - Salve as configurações
+
+3. **Aguarde o deploy automático:**
+   - O GitHub Actions irá fazer o deploy automaticamente
+   - Você pode acompanhar o progresso na aba **Actions**
+   - Quando concluído, seu site estará disponível em:
+     `https://SEU-USUARIO.github.io/FutLab-QA/`
+
+### Deploy Manual (Alternativa):
+
+Se preferir fazer deploy manual:
+
+1. Vá em **Settings** → **Pages**
+2. Em **Source**, selecione a branch desejada (ex: `crud_player`)
+3. Selecione a pasta `/ (root)`
+4. Clique em **Save**
+
+O site ficará disponível em alguns minutos!
+
+### 🔗 Link do Deploy:
+
+Após configurar, seu site estará disponível em:
+```
+https://SEU-USUARIO.github.io/FutLab-QA/
+```
+
 ## 📁 Estrutura do Projeto
 
 ```
