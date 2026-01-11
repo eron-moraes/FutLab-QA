@@ -3,70 +3,32 @@ const { createApp } = Vue;
 createApp({
     data() {
         return {
-            teams: window.teams,
-
-            positions: [
-                "Goleiro",
-                "Zagueiro",
-                "Lateral",
-                "Volante",
-                "Meia",
-                "Atacante"
-            ],
-
+            teams,
             players: [],
-
             player: {
                 name: "",
-                birthDate: "",
-                position: "",
-                foot: "",
-                height: "",
-                weight: "",
-                team: null,
-                status: ""
+                team: ""
             },
-
             selectedColor: "transparent"
         };
     },
 
     methods: {
         updateTeamColors() {
-            this.selectedColor = this.player.team
-                ? this.player.team.color
-                : "transparent";
+            this.selectedColor = this.player.team.color || "transparent";
         },
 
         addPlayer() {
-            if (
-                !this.player.name ||
-                !this.player.birthDate ||
-                !this.player.position ||
-                !this.player.foot ||
-                !this.player.height ||
-                !this.player.weight ||
-                !this.player.team ||
-                !this.player.status
-            ) {
-                alert("Preencha todos os campos");
-                return;
-            }
+            if (!this.player.name || !this.player.team) return;
 
-            this.players.push({ ...this.player });
+            this.players.push({
+                name: this.player.name,
+                team: this.player.team
+            });
 
-            // Reset
-            this.player = {
-                name: "",
-                birthDate: "",
-                position: "",
-                foot: "",
-                height: "",
-                weight: "",
-                team: null,
-                status: ""
-            };
-
+            // Reset form
+            this.player.name = "";
+            this.player.team = "";
             this.selectedColor = "transparent";
         }
     }
